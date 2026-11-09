@@ -204,8 +204,8 @@ body.open{overflow:hidden}
 .prod .k{color:#c45f12}
 .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .pc{background:#fff;border:2px solid #1a140e;border-radius:2px;overflow:hidden;display:flex;flex-direction:column;min-width:0;box-shadow:6px 6px 0 rgba(232,148,58,.2)}
-.pc .img{height:180px;background:#e8ecef;display:flex;align-items:center;justify-content:center;padding:12px;border-bottom:2px solid #1a140e}
-.pc .img img{max-width:100%;max-height:156px;width:auto;height:auto;object-fit:contain}
+.pc .img{height:200px;background:#1a140e;display:block;padding:0;border-bottom:2px solid #1a140e;overflow:hidden}
+.pc .img img{width:100%;height:200px;object-fit:cover;object-position:center;display:block}
 .pc .bd{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
 .pc .tg{font:700 10px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:#c45f12}
 .pc h3{font:800 18px/1.2 var(--fh);margin:0}
@@ -322,19 +322,7 @@ footer .brand img{height:28px;width:auto;filter:brightness(0) invert(1)}
  <p class="k">Ячейки каталога</p>
  <h2>Продукция <em>ЭЗОИС</em></h2>
  <p class="lead">Блочные трансформаторные подстанции, распределительные пункты и КРУ — с официального каталога завода.</p>
- <div class="pg"><article class="pc rv"><div class="img"><img src="a05.jpg" width="280" height="240" alt="Блочные комплектные ТП" loading="lazy"></div>
-  <div class="bd"><span class="tg">БКТП</span><h3>Блочные комплектные ТП</h3><p>Приём, преобразование и распределение до 20 кВ, мощность до 2500 кВА.</p>
-  <button type="button" data-open="Запрос: Блочные комплектные ТП. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a06.jpg" width="280" height="413" alt="Блочные распределительные пункты" loading="lazy"></div>
-  <div class="bd"><span class="tg">БРП</span><h3>Блочные распределительные пункты</h3><p>Для городского освещения; основное оборудование — ВРШ-НО-М8.</p>
-  <button type="button" data-open="Запрос: Блочные распределительные пункты. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a07.png" width="268" height="285" alt="Блочные комплектные РП" loading="lazy"></div>
-  <div class="bd"><span class="tg">БКРП</span><h3>Блочные комплектные РП</h3><p>Распределение электроэнергии трёхфазного тока напряжением до 20 кВ.</p>
-  <button type="button" data-open="Запрос: Блочные комплектные РП. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a08.png" width="268" height="285" alt="Комплектные распределительные устройства" loading="lazy"></div>
-  <div class="bd"><span class="tg">КРУ 6–10 кВ</span><h3>Комплектные распределительные устройства</h3><p>Ячейки среднего напряжения для РУ подстанций.</p>
-  <button type="button" data-open="Запрос: Комплектные распределительные устройства. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a09.png" width="268" height="285" alt="Распределительные устройства НН" loading="lazy"></div>
-  <div class="bd"><span class="tg">КРУ 0,4 кВ</span><h3>Распределительные устройства НН</h3><p>Вводно-распределительные устройства 0,4 кВ.</p>
-  <button type="button" data-open="Запрос: Распределительные устройства НН. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a10.jpg" width="280" height="280" alt="КТП из композита" loading="lazy"></div>
-  <div class="bd"><span class="tg">Композит</span><h3>КТП из композита</h3><p>Корпус в 7 раз легче бетона; огнестойкий; срок эксплуатации более 50 лет.</p>
-  <button type="button" data-open="Запрос: КТП из композита. ">Запросить расчёт →</button></div></article></div>
+ <div class="pg"><article class="pc rv"><div class="img"><img src="a05.jpg" width="280" height="210" alt="Блочные комплектные ТП" loading="lazy"></div><div class="bd"><span class="tg">БКТП</span><h3>Блочные комплектные ТП</h3><p>Приём, преобразование и распределение до 20 кВ, мощность до 2500 кВА.</p><button type="button" data-open="Запрос: Блочные комплектные ТП. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a06.jpg" width="280" height="210" alt="Блочные распределительные пункты" loading="lazy"></div><div class="bd"><span class="tg">БРП</span><h3>Блочные распределительные пункты</h3><p>Для городского освещения; основное оборудование — ВРШ-НО-М8.</p><button type="button" data-open="Запрос: Блочные распределительные пункты. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a07.jpg" width="280" height="210" alt="Блочные комплектные РП" loading="lazy"></div><div class="bd"><span class="tg">БКРП</span><h3>Блочные комплектные РП</h3><p>Распределение электроэнергии трёхфазного тока напряжением до 20 кВ.</p><button type="button" data-open="Запрос: Блочные комплектные РП. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a08.jpg" width="280" height="210" alt="Комплектные распределительные устройства" loading="lazy"></div><div class="bd"><span class="tg">КРУ 6–10 кВ</span><h3>Комплектные распределительные устройства</h3><p>Ячейки среднего напряжения для РУ подстанций.</p><button type="button" data-open="Запрос: Комплектные распределительные устройства. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a09.jpg" width="280" height="210" alt="Распределительные устройства НН" loading="lazy"></div><div class="bd"><span class="tg">КРУ 0,4 кВ</span><h3>Распределительные устройства НН</h3><p>Вводно-распределительные устройства 0,4 кВ.</p><button type="button" data-open="Запрос: Распределительные устройства НН. ">Запросить расчёт →</button></div></article><article class="pc rv"><div class="img"><img src="a10.jpg" width="280" height="210" alt="КТП из композита" loading="lazy"></div><div class="bd"><span class="tg">Композит</span><h3>КТП из композита</h3><p>Корпус в 7 раз легче бетона; огнестойкий; срок эксплуатации более 50 лет.</p><button type="button" data-open="Запрос: КТП из композита. ">Запросить расчёт →</button></div></article></div>
 </div></section>
 
 <section class="ab" id="about"><div class="wrap ag">

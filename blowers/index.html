@@ -165,22 +165,22 @@ img{max-width:100%;height:auto}
 /* —— hero = the фишка, full-bleed, no floating card —— */
 .hero-bleed{position:relative;min-height:calc(100svh - var(--hdh));overflow:hidden;background:var(--y);color:var(--ink)}
 .hero-bleed canvas{position:absolute;inset:0;width:100%;height:100%;display:block;max-width:none}
-.hero-type{position:absolute;left:40px;top:28px;width:min(640px,calc(100% - 80px));pointer-events:none;z-index:2}
+.hero-type{position:absolute;left:40px;top:18px;width:min(640px,calc(100% - 80px));pointer-events:none;z-index:2}
 .hero-type .kicker{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ind);margin:0 0 4px}
-.hero-type h1{font-size:clamp(56px,9vw,128px);font-weight:800;letter-spacing:-.045em;word-spacing:.1em;line-height:.82;text-transform:uppercase;margin:0;color:var(--ink)}
-.hero-type .lead{pointer-events:auto;max-width:520px;font-size:16px;line-height:1.4;margin:12px 0 0;color:var(--ink)}
-.hero-toggle{position:absolute;top:28px;right:32px;z-index:3;background:var(--ink);color:var(--y);border:0;
+.hero-type h1{font-size:clamp(52px,8vw,104px);font-weight:800;letter-spacing:-.045em;word-spacing:.1em;line-height:.82;text-transform:uppercase;margin:0;color:var(--ink)}
+.hero-type .lead{pointer-events:auto;max-width:520px;font-size:16px;line-height:1.4;margin:8px 0 0;color:var(--ink)}
+.hero-toggle{position:absolute;top:18px;right:32px;z-index:3;background:var(--ink);color:var(--y);border:0;
   font:700 14px var(--fb);letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;cursor:pointer;border-radius:2px}
 .hero-rail{position:absolute;left:0;right:0;bottom:0;z-index:3;display:grid;
   grid-template-columns:repeat(6,minmax(0,1fr));gap:0;border-top:3px solid var(--ink)}
 .hero-rail button{appearance:none;border:0;border-right:3px solid var(--ink);background:var(--cr);color:var(--ink);
-  text-align:left;padding:14px 14px 12px;cursor:pointer;min-width:0;font:inherit;display:flex;flex-direction:column;gap:2px;min-height:92px}
+  text-align:left;padding:12px 14px 10px;cursor:pointer;min-width:0;font:inherit;display:flex;flex-direction:column;gap:2px;min-height:80px}
 .hero-rail button:last-child{border-right:0}
 .hero-rail button b{font-family:var(--fh);font-weight:800;font-size:28px;letter-spacing:-.03em;word-spacing:.1em;line-height:.9;text-transform:uppercase}
 .hero-rail button span{font-size:11px;font-weight:600;letter-spacing:.02em;line-height:1.25;opacity:.8}
 .hero-rail button.on{background:var(--ink);color:var(--y)}
 .hero-rail button.on span{color:var(--y);opacity:.85}
-.hero-facts{position:absolute;right:32px;top:92px;z-index:2;width:min(280px,28vw);pointer-events:none}
+.hero-facts{position:absolute;right:32px;top:80px;z-index:2;width:min(260px,24vw);pointer-events:none}
 .hero-facts .hf{font-family:var(--fh);font-weight:800;font-size:22px;letter-spacing:-.02em;word-spacing:.12em;line-height:1;text-transform:uppercase;margin:0 0 10px;color:var(--ind)}
 .hero-facts ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .hero-facts li{background:var(--ind);color:var(--y);padding:8px 10px}
@@ -266,9 +266,9 @@ img{max-width:100%;height:auto}
   body.open .ovn{display:flex;flex-direction:column;position:fixed;inset:var(--hdh) 0 0 0;background:var(--ind);z-index:79;padding:28px 24px;gap:16px;overflow:auto}
   body.open .ovn a{font-size:28px;font-weight:800;color:var(--y);font-family:var(--fh);text-transform:uppercase;letter-spacing:-.03em}
   .wrap,.wrap-wide,.hd-in{width:calc(100% - 28px)}
-  .hero-type{left:16px;top:16px;width:calc(100% - 32px)}
+  .hero-type{left:16px;top:12px;width:calc(100% - 32px)}
   .hero-type h1{font-size:clamp(44px,16vw,72px)}
-  .hero-type .lead{font-size:14px;margin-top:8px}
+  .hero-type .lead{font-size:14px;margin-top:6px}
   .hero-toggle{top:16px;right:16px;padding:8px 12px;font-size:12px}
   .hero-rail{grid-template-columns:repeat(3,minmax(0,1fr))}
   .hero-rail button{min-height:72px;padding:10px 10px 8px;border-bottom:3px solid var(--ink)}
@@ -427,10 +427,24 @@ function resize(){
   W=r.width; H=r.height;
 }
 
+
+function fig8Path(ax,ay,bx,by,r){
+  var dx=bx-ax, dy=by-ay;
+  var dist=Math.hypot(dx,dy);
+  if(r<=dist/2+0.01) r=dist/2+0.02;
+  var a=Math.acos(Math.min(1,(dist/2)/r));
+  var base=Math.atan2(dy,dx);
+  ctx.beginPath();
+  ctx.arc(ax,ay,r, base-a, base+a, true);
+  var p1x=ax+r*Math.cos(base+a), p1y=ay+r*Math.sin(base+a);
+  var p2x=ax+r*Math.cos(base-a), p2y=ay+r*Math.sin(base-a);
+  ctx.arc(bx,by,r, Math.atan2(p1y-by,p1x-bx), Math.atan2(p2y-by,p2x-bx), true);
+  ctx.closePath();
+}
 function lobePath(cx,cy,A,B,rot){
   ctx.beginPath();
-  for(var i=0;i<=120;i++){
-    var t=i/120*Math.PI*2;
+  for(var i=0;i<=160;i++){
+    var t=i/160*Math.PI*2;
     var rr=A+B*Math.cos(2*t);
     var x=rr*Math.cos(t), y=rr*Math.sin(t);
     var c=Math.cos(rot), s=Math.sin(rot);
@@ -439,82 +453,143 @@ function lobePath(cx,cy,A,B,rot){
   }
   ctx.closePath();
 }
-
-function pocket(cx,cy,rot,r){
-  ctx.save();
-  ctx.translate(cx,cy);
-  ctx.rotate(rot);
-  ctx.beginPath();
-  ctx.ellipse(0,0,r*1.15,r*0.72,0,0,Math.PI*2);
-  ctx.fillStyle='#00D4FF';
-  ctx.fill();
-  ctx.restore();
+function chamberBox(){
+  var cr=cvs.getBoundingClientRect();
+  var rail=document.getElementById('kam-tabs').getBoundingClientRect();
+  var lead=(document.querySelector('.hero-type .lead')||document.querySelector('.hero-type')).getBoundingClientRect();
+  var facts=document.getElementById('kam-info');
+  var mob=W<900;
+  var y0=lead.bottom-cr.top+(mob?8:4);
+  var y1=rail.top-cr.top-(mob?8:4);
+  var x0=mob?14:24;
+  var x1=W-(mob?14:24);
+  var factsL=null;
+  if(!mob && facts && window.getComputedStyle(facts).display!=='none'){
+    factsL=facts.getBoundingClientRect().left-cr.left;
+  }
+  if(y1-y0<120){ y0=Math.max(20,y1-120); }
+  return {x0:x0,x1:x1,y0:y0,y1:y1,cx:(x0+x1)/2,cy:(y0+y1)/2,availW:x1-x0,availH:y1-y0,mob:mob,factsL:factsL};
 }
-
+function rootsUnit(){
+  var A=78, B=34, d=2*A+3, tip=A+B, bore=tip*1.04, wall=16, outer=bore+wall;
+  return {A:A,B:B,d:d,tip:tip,bore:bore,wall:wall,outer:outer,h:2*outer,w:d+2*outer};
+}
 function drawRoots(){
-  var rail= (W<900? 150: 100);
-  var top= (W<900? 130: 90);
-  var cx=W*0.48, cy=top+(H-rail-top)*0.52;
-  var sc=Math.min(W*0.9, (H-rail-top)*0.95)/520;
-  var A=78*sc, B=34*sc, gap=A*2;
-  var L=cx-gap/2, Rgt=cx+gap/2;
+  var box=chamberBox();
+  var U=rootsUnit();
+  var vert=box.mob;
+  var labelRoom=vert?0:22;
+  var sc=Math.min(box.availW/(vert?U.h:U.w), (box.availH-2*labelRoom)/(vert?U.w:U.h));
+  var A=U.A*sc, B=U.B*sc, d=U.d*sc, boreR=U.bore*sc, wall=U.wall*sc, outerR=U.outer*sc;
+  var casingW=(vert?U.h:U.w)*sc;
+  var cx=vert?box.cx:W*0.5, cy=box.cy;
+  if(!vert && box.factsL && cx+casingW/2>box.factsL-12){
+    cx=box.factsL-12-casingW/2;
+  }
+  var x1,y1,x2,y2;
+  if(vert){ x1=cx; y1=cy-d/2; x2=cx; y2=cy+d/2; }
+  else { x1=cx-d/2; y1=cy; x2=cx+d/2; y2=cy; }
   var a1=ang, a2=-ang+Math.PI/2;
 
-  // casing
-  var casW=gap+A*2.55, casH=A*2.7;
+  fig8Path(x1,y1,x2,y2,outerR);
+  ctx.fillStyle='#2416A8'; ctx.fill();
+  ctx.strokeStyle='#140E22'; ctx.lineWidth=Math.max(2,3*sc); ctx.stroke();
+
+  fig8Path(x1,y1,x2,y2,boreR);
+  ctx.fillStyle='#1a1078'; ctx.fill();
+
   ctx.save();
-  ctx.translate(cx,cy);
-  ctx.fillStyle='#2416A8';
-  roundRect(-casW/2,-casH/2,casW,casH,casH/2);
-  ctx.fill();
-  ctx.fillStyle='#1a0f80';
-  roundRect(-casW/2+10*sc,-casH/2+10*sc,casW-20*sc,casH-20*sc,(casH-20*sc)/2);
-  ctx.fill();
+  fig8Path(x1,y1,x2,y2,boreR);
+  ctx.clip();
+  ctx.fillStyle='#00D4FF';
+  ctx.fillRect(0,0,W,H);
   ctx.restore();
 
-  // outlet (top, magenta) and inlet (bottom, cyan)
-  var dw=56*sc, dh=70*sc;
-  ctx.fillStyle='#FF2A6A';
-  ctx.fillRect(cx-dw/2, cy-casH/2-dh+8*sc, dw, dh);
-  ctx.fillStyle='#00D4FF';
-  ctx.fillRect(cx-dw/2, cy+casH/2-8*sc, dw, dh);
-
-  // air pockets riding the casing
-  var t=ang;
-  pocket(L-A-8*sc, cy+Math.cos(t)*A*0.95, t, 18*sc);
-  pocket(Rgt+A+8*sc, cy-Math.cos(t)*A*0.95, t+Math.PI, 18*sc);
-  pocket(cx, cy-casH/2+24*sc, 0, 12*sc* (0.6+0.4*Math.sin(t*2)));
-
-  // rotors
-  ctx.lineWidth=3*sc;
+  ctx.lineWidth=Math.max(2,2.5*sc);
   ctx.strokeStyle='#140E22';
-  lobePath(L,cy,A,B,a1);
+  lobePath(x1,y1,A,B,a1);
   ctx.fillStyle='#FF2A6A'; ctx.fill(); ctx.stroke();
-  lobePath(Rgt,cy,A,B,a2);
+  lobePath(x2,y2,A,B,a2);
   ctx.fillStyle='#C6FF3D'; ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#FFE600';
-  ctx.beginPath(); ctx.arc(L,cy,10*sc,0,Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(Rgt,cy,10*sc,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#140E22';
-  ctx.beginPath(); ctx.arc(L,cy,4*sc,0,Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(Rgt,cy,4*sc,0,Math.PI*2); ctx.fill();
 
+  [[x1,y1],[x2,y2]].forEach(function(s){
+    ctx.beginPath(); ctx.arc(s[0],s[1],11*sc,0,Math.PI*2);
+    ctx.fillStyle='#FFE600'; ctx.fill();
+    ctx.beginPath(); ctx.arc(s[0],s[1],4.5*sc,0,Math.PI*2);
+    ctx.fillStyle='#140E22'; ctx.fill();
+  });
+
+  var mx=(x1+x2)/2, my=(y1+y2)/2;
+  var axis=Math.atan2(y2-y1,x2-x1);
+  var boreValley=Math.sqrt(Math.max(0, boreR*boreR-(d/2)*(d/2)));
+  var pw=boreR*0.38, ph=wall+26*sc, chan=pw*0.58;
+  function port(outAng, color, label){
+    var vx=Math.cos(outAng), vy=Math.sin(outAng);
+    var tx=-vy, ty=vx;
+    var ox=mx+vx*boreValley, oy=my+vy*boreValley;
+    var hw=pw/2, out=ph;
+    var corners=[
+      [ox+tx*hw, oy+ty*hw],
+      [ox-tx*hw, oy-ty*hw],
+      [ox-tx*hw+vx*out, oy-ty*hw+vy*out],
+      [ox+tx*hw+vx*out, oy+ty*hw+vy*out]
+    ];
+    ctx.fillStyle=color;
+    ctx.beginPath();
+    ctx.moveTo(corners[0][0],corners[0][1]);
+    ctx.lineTo(corners[1][0],corners[1][1]);
+    ctx.lineTo(corners[2][0],corners[2][1]);
+    ctx.lineTo(corners[3][0],corners[3][1]);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle='#140E22'; ctx.lineWidth=Math.max(1.5,2*sc); ctx.stroke();
+    var hw2=chan/2;
+    ctx.fillStyle='#00D4FF';
+    ctx.beginPath();
+    ctx.moveTo(ox+tx*hw2, oy+ty*hw2);
+    ctx.lineTo(ox-tx*hw2, oy-ty*hw2);
+    ctx.lineTo(ox-tx*hw2+vx*(out-5*sc), oy-ty*hw2+vy*(out-5*sc));
+    ctx.lineTo(ox+tx*hw2+vx*(out-5*sc), oy+ty*hw2+vy*(out-5*sc));
+    ctx.closePath();
+    ctx.fill();
+    return corners;
+  }
+  // top / discharge = perpendicular "up" for horizontal; right for vertical
+  var nOut=axis-Math.PI/2, nIn=axis+Math.PI/2;
+  var cOut=port(nOut,'#FF2A6A');
+  var cIn=port(nIn,'#00D4FF');
+  var fs=Math.max(14, Math.round(15.5*Math.min(1.35,sc)));
+  ctx.font='700 '+fs+'px Onest,sans-serif';
   ctx.fillStyle='#140E22';
-  ctx.font='700 '+Math.max(11,Math.round(13*sc))+'px Onest,sans-serif';
-  ctx.textAlign='center';
-  ctx.fillText('нагнетание', cx, cy-casH/2-dh+20*sc+10);
-  ctx.fillText('всасывание', cx, cy+casH/2+dh-16*sc);
+  function label(corners, text, vertMode, where){
+    var xs=corners.map(function(c){return c[0];});
+    var ys=corners.map(function(c){return c[1];});
+    var minx=Math.min.apply(null,xs), maxx=Math.max.apply(null,xs);
+    var miny=Math.min.apply(null,ys), maxy=Math.max.apply(null,ys);
+    var gap=8;
+    ctx.textAlign='center';
+    if(vertMode){
+      ctx.textBaseline='bottom';
+      ctx.fillText(text, (minx+maxx)/2, miny-gap);
+    } else if(where==='above'){
+      ctx.textBaseline='bottom';
+      ctx.fillText(text, (minx+maxx)/2, miny-gap);
+    } else {
+      ctx.textBaseline='top';
+      ctx.fillText(text, (minx+maxx)/2, maxy+gap);
+    }
+  }
+  label(cOut,'нагнетание',vert,'above');
+  label(cIn,'всасывание',vert,'below');
 }
-
 function drawTurbo(){
-  var rail= (W<900? 150: 100);
-  var top= (W<900? 130: 90);
-  var cx=W*0.5, cy=top+(H-rail-top)*0.5;
-  var sc=Math.min(W, H-rail-top)/620;
-  var R=150*sc;
+  var box=chamberBox();
+  var sc=Math.min(box.availW, box.availH)/360;
+  var cx=box.cx, cy=box.cy, R=150*sc;
   ctx.fillStyle='#2416A8';
   ctx.beginPath(); ctx.arc(cx,cy,R+22*sc,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#1a0f80';
+  ctx.strokeStyle='#140E22'; ctx.lineWidth=Math.max(2,3*sc); ctx.stroke();
+  ctx.fillStyle='#1a1078';
   ctx.beginPath(); ctx.arc(cx,cy,R+6*sc,0,Math.PI*2); ctx.fill();
   var i,a;
   for(i=0;i<11;i++){
@@ -522,7 +597,6 @@ function drawTurbo(){
     ctx.beginPath();
     var x1=cx+Math.cos(a)*28*sc, y1=cy+Math.sin(a)*28*sc;
     var x2=cx+Math.cos(a+0.18)*R, y2=cy+Math.sin(a+0.18)*R;
-    var x3=cx+Math.cos(a+0.42)*R, y3=cy+Math.sin(a+0.42)*R;
     ctx.moveTo(x1,y1); ctx.quadraticCurveTo((x1+x2)/2,(y1+y2)/2,x2,y2);
     ctx.arc(cx,cy,R,a+0.18,a+0.42); ctx.closePath();
     ctx.fillStyle='#FF2A6A'; ctx.fill();
@@ -532,10 +606,11 @@ function drawTurbo(){
   ctx.beginPath(); ctx.arc(cx,cy,24*sc,0,Math.PI*2); ctx.fill();
   ctx.fillStyle='#140E22';
   ctx.beginPath(); ctx.arc(cx,cy,8*sc,0,Math.PI*2); ctx.fill();
-  ctx.font='700 '+Math.max(11,Math.round(13*sc))+'px Onest,sans-serif';
+  ctx.font='700 '+Math.max(14,Math.round(15*sc))+'px Onest,sans-serif';
   ctx.textAlign='center';
+  ctx.textBaseline='alphabetic';
   ctx.fillStyle='#140E22';
-  ctx.fillText('центробежное колесо, схема', cx, cy-R-32*sc);
+  ctx.fillText('центробежное колесо, схема', cx, cy-R-28*sc);
 }
 
 function roundRect(x,y,w,h,r){
@@ -566,7 +641,7 @@ window.addEventListener('resize', resize);
 document.getElementById('kam-toggle').addEventListener('click',function(){
   playing=!playing; this.textContent=playing?'Стоп':'Пуск'; if(playing) last=0;
 });
-resize(); showK('1a'); requestAnimationFrame(tick);
+resize(); showK('1a'); window.__kamSetAng=function(a){ang=a;playing=false;draw();}; requestAnimationFrame(tick);
 })();
 </script>
 
